@@ -1,0 +1,26 @@
+name: On Nautobot Location Event
+
+on:
+  repository_dispatch:
+    types: [nautobot_location_created]
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Display Location Info
+        run: |
+          echo "🚀 A new location was created in Nautobot!"
+          echo "📍 Location Name: ${{ github.event.client_payload.location_name }}"
+          echo "🆔 Location ID: ${{ github.event.client_payload.location_id }}"
+          echo "👤 Created by: ${{ github.event.client_payload.username }}"
+          echo "🕒 Event Time: ${{ github.event.client_payload.timestamp }}"
+
+      # Add your own CI/CD steps below
+      # For example:
+      # - name: Run tests
+      #   run: |
+      #     echo "Running automated tests..."
